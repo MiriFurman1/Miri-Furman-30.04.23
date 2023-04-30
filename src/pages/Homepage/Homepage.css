@@ -6,10 +6,12 @@
     justify-content: space-around;
     align-items: center;
     height:20vh;
+    margin-bottom: 10vh;
 }
 .DaysWeather{
     display: flex;
     justify-content: space-around;
     align-items: center;
     height:20vh;
+    flex-wrap: wrap;
 }
