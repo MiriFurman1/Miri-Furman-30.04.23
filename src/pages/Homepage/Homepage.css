@@ -1,0 +1,15 @@
+.Homepage{
+    height: 100vh;
+}
+.topContainer{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height:20vh;
+}
+.DaysWeather{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height:20vh;
+}
