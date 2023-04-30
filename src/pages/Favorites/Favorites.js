@@ -1,7 +1,9 @@
 import React from 'react'
 import Card from '@mui/material/Card';
 import Header from '../../components/Header/Header.js';
+import useFavoritesStore from '../../app/favoritesStore.js';
 function Favorites() {
+    const removeFavorite=useFavoritesStore((state)=>state.removeFavorite)
     return (
         <div>
             <Header />
