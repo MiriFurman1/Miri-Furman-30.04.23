@@ -1,6 +1,4 @@
-.Homepage{
-    height: 100vh;
-}
+
 .topContainer{
     display: flex;
     justify-content: space-around;
@@ -14,4 +12,15 @@
     align-items: center;
     height:20vh;
     flex-wrap: wrap;
+}
+
+.search{
+    height:10vh;
+    margin-top: 5vh;
+}
+
+.search input{
+    width:40vw;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
 }
