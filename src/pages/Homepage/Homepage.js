@@ -8,8 +8,11 @@ import './Homepage.css'
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 
 function Homepage() {
+    const favorites = useFavoritesStore(state => state.favorites);
     const addFavorite = useFavoritesStore((state) => state.addFavorite)
     const removeFavorite = useFavoritesStore((state) => state.removeFavorite)
     const [currentWeather, setCurrentWeather] = useState("")
@@ -17,19 +20,20 @@ function Homepage() {
     const [daysForecasts, setDaysForecasts] = useState("")
     const [citySearch, setCitySearch] = useState("")
     const [cityData, setCityData] = useState("")
+    const [isFavorite, setIsFavorite] = useState(false)
 
     useEffect(() => {
         axios.get(`http://dataservice.accuweather.com/currentconditions/v1/215854?apikey=${process.env.REACT_APP_API_KEY}`)
-        .then((response)=>{
-            setCurrentWeather(response.data)
-            localStorage.setItem("currentWeather",JSON.stringify(response.data))
-            console.log(response.data);
-        })
+            .then((response) => {
+                setCurrentWeather(response.data)
+                localStorage.setItem("currentWeather", JSON.stringify(response.data))
+                // console.log(response.data);
+            })
         axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_API_KEY}&metric=true`)
-                .then((response)=>{
-                    setDaysForecasts(response.data)
-                localStorage.setItem("daysForecasts",JSON.stringify(response.data))
-                console.log(response.data);
+            .then((response) => {
+                setDaysForecasts(response.data)
+                localStorage.setItem("daysForecasts", JSON.stringify(response.data))
+                // console.log(response.data);
             })
     }, [])
 
@@ -46,7 +50,7 @@ function Homepage() {
             const response = await axios.get(
                 `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${process.env.REACT_APP_API_KEY}&q=${citySearch}`
             );
-            let cityDataVar=response.data[0];
+            let cityDataVar = response.data[0];
             setCityData(cityDataVar);
             setCitySearch('');
             setCurrentLocation(cityDataVar.LocalizedName)
@@ -90,7 +94,20 @@ function Homepage() {
                         {currentWeather[0] && <h3>{currentWeather[0].WeatherText}</h3>}
                         {currentWeather[0] && <img src={`/weather icons/${currentWeather[0].WeatherIcon}-s.png`} alt='day-icon'></img>}
                     </Card>
-                    <Button style={{ backgroundColor: 'white', padding: '0.5rem' }}>Add to favorites</Button>
+                    <Button
+                        style={{ backgroundColor: 'white', padding: '0.5rem' }}
+                        onClick={() => {
+                            const isAlreadyFavorite = favorites.some((favorite) => favorite.key === cityData.Key);
+                            if (isAlreadyFavorite) {
+                                removeFavorite(cityData.Key);
+                            } else {
+                                addFavorite({ name: cityData.LocalizedName, key: cityData.Key });
+                            }
+                            setIsFavorite(!isFavorite);
+                        }}
+                    >
+                        {isFavorite ? <><AiFillHeart size={25} /> Remove from favorites</> : <><AiOutlineHeart size={25} /> Add to favorites</>}
+                    </Button>
                 </div>
                 <div className='DaysWeather'>
                     {daysForecasts && daysForecasts.DailyForecasts.map((forecast, i) => {
