@@ -1,71 +1,22 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# Miri-Furman-30.04.23
+<h1>Weather App</h1>
+<p>This is a simple web app built with React and MUI that displays the weather of a city using the AccuWeather API. Users can search for a city, add it to their favorites and view the weather details of the city on the main page. The app has two pages: weather page and favorites page.</p>
+<h2>Demo</h2>
+<p>You can find a live demo of the app here: https://weather-app-miri.netlify.app/ </p>
+<h2>Specs</h2>
+<ul>
+  <li>The header includes navigation icons/links/buttons for the main and favorites screen.</li>
+  <li>The main screen (weather details) includes a search field to search a location’s weather by city name. The search is triggered when the user presses the "Enter" key. Below the search field, the current weather and a 5-day forecast of the searched location are displayed. A location has an indication if it’s already saved in favorites, and a button to add/remove from favorites is displayed.</li>
+  <li>The default location is Tel Aviv weather.</li>
+  <li>The favorites screen displays a list of favorite locations. Each location includes an ID, name and current weather. Clicking on a favorite navigates to the main screen showing the details of that location.</li>
+  <li>Searching is done in English letters only.</li>
+  <li>The state is managed using Zustand.</li>
+  <li>The design is responsive using MUI (with flexbox/grid).</li>
+  <li>Errors are handled using Toastify. When an error occurs, a toast notification is displayed at the top of the screen for a few seconds.</li>
+</ul>
+<h2>Libraries/Frameworks Used</h2>
+<ul>
+  <li>MUI - UI Library</li>
+  <li>React - Front-end framework</li>
+  <li>Zustand - State management</li>
+  <li>Toastify - Error handling</li>
+</ul>
