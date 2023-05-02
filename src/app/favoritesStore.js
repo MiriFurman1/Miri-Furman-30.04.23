@@ -1,21 +1,23 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 
 import { devtools, persist } from 'zustand/middleware'
 
 
 const favoritesStore = (set) => ({
     favorites: [],
+
     addFavorite: (favorite) => {
         set((state) => ({
             favorites: [favorite, ...state.favorites],
         }))
     },
-    removeFavorite: (favoriteId) => {
+    removeFavorite: (favoriteKey) => {
         set((state) => ({
-            favorites: state.favorites.filter((c) => c.id !== favoriteId)
+            favorites: state.favorites.filter((c) => c.key !== favoriteKey)
         }))
-    
-}
+    },
+    selectedCity: null,
+    setSelectedCity: (cityKey) => set({ selectedCity: cityKey }),
 })
 
 const useFavoritesStore = create(

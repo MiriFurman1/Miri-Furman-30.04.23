@@ -15,13 +15,16 @@ function Homepage() {
     const favorites = useFavoritesStore(state => state.favorites);
     const addFavorite = useFavoritesStore((state) => state.addFavorite)
     const removeFavorite = useFavoritesStore((state) => state.removeFavorite)
+    const selectedCity = useFavoritesStore((state) => state.selectedCity);
+    const setSelectedCity = useFavoritesStore((state) => state.setSelectedCity);
     const [currentWeather, setCurrentWeather] = useState("")
     const [currentLocation, setCurrentLocation] = useState("Tel Aviv")
     const [daysForecasts, setDaysForecasts] = useState("")
     const [citySearch, setCitySearch] = useState("")
-    const [cityData, setCityData] = useState("")
+    const [cityData, setCityData] = useState({ LocalizedName: "Tel Aviv", Key: 215854 })
     const [isFavorite, setIsFavorite] = useState(false)
 
+    console.log(selectedCity);
     useEffect(() => {
         axios.get(`http://dataservice.accuweather.com/currentconditions/v1/215854?apikey=${process.env.REACT_APP_API_KEY}`)
             .then((response) => {
@@ -37,12 +40,46 @@ function Homepage() {
             })
     }, [])
 
+    useEffect(() => {
+        if (selectedCity !== null && Object.keys(selectedCity).length !== 0) {
+            console.log("here");
+            console.log(selectedCity);
+            axios
+                .get(
+                    `http://dataservice.accuweather.com/currentconditions/v1/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}`
+                )
+                .then((response) => {
+                    setCurrentWeather(response.data);
+                    localStorage.setItem("currentWeather", JSON.stringify(response.data));
+                });
+
+            axios
+                .get(
+                    `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
+                )
+                .then((response) => {
+                    setDaysForecasts(response.data);
+                    localStorage.setItem("daysForecasts", JSON.stringify(response.data));
+                    setCurrentLocation(selectedCity.cityName)
+                    setSelectedCity(null)
+                });
+        }
+    }, [selectedCity]);
 
     useEffect(() => {
         setCurrentWeather(JSON.parse(localStorage.getItem("currentWeather")))
         setDaysForecasts(JSON.parse(localStorage.getItem("daysForecasts")))
 
     }, [])
+
+    useEffect(() => {
+        console.log( cityData.LocalizedName);
+        const isCurrentLocationFavorite = favorites.some(
+            (favorite) => favorite.name === cityData.LocalizedName
+        );
+        console.log(isCurrentLocationFavorite);
+        setIsFavorite(isCurrentLocationFavorite);
+    }, [favorites,cityData]);
 
     const searchCity = async (e) => {
         e.preventDefault();
