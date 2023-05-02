@@ -30,11 +30,11 @@ function Homepage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const currentWeatherResponse = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/215854?apikey=${process.env.REACT_APP_API_KEY}`);
+                const currentWeatherResponse = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/215854?apikey=${process.env.REACT_APP_API_KEY}`);
                 setCurrentWeather(currentWeatherResponse.data);
                 localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
 
-                const daysForecastsResponse = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_API_KEY}&metric=true`);
+                const daysForecastsResponse = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_API_KEY}&metric=true`);
                 setDaysForecasts(daysForecastsResponse.data);
                 localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
             } catch (error) {
@@ -50,13 +50,13 @@ function Homepage() {
             try {
                 if (selectedCity !== null && Object.keys(selectedCity).length !== 0) {
                     const currentWeatherResponse = await axios.get(
-                        `http://dataservice.accuweather.com/currentconditions/v1/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}`
+                        `https://dataservice.accuweather.com/currentconditions/v1/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}`
                     );
                     setCurrentWeather(currentWeatherResponse.data);
                     localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
 
                     const daysForecastsResponse = await axios.get(
-                        `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
+                        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
                     );
                     setDaysForecasts(daysForecastsResponse.data);
                     localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
@@ -101,7 +101,7 @@ function Homepage() {
             }
             try {
                 const response = await axios.get(
-                    `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${process.env.REACT_APP_API_KEY}&q=${citySearch}`
+                    `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${process.env.REACT_APP_API_KEY}&q=${citySearch}`
                 );
                 let cityDataVar = response.data[0];
                 if (!cityDataVar) {
@@ -113,13 +113,13 @@ function Homepage() {
                 setCurrentLocation(cityDataVar.LocalizedName)
                 console.log(cityDataVar);
                 const currentWeatherResponse = await axios.get(
-                    `http://dataservice.accuweather.com/currentconditions/v1/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}`
+                    `https://dataservice.accuweather.com/currentconditions/v1/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}`
                 );
                 const currentWeatherData = currentWeatherResponse.data;
                 setCurrentWeather(currentWeatherData);
                 localStorage.setItem('currentWeather', JSON.stringify(currentWeatherData));
                 const daysForecastsResponse = await axios.get(
-                    `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
+                    `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
                 );
                 const daysForecastsData = daysForecastsResponse.data;
                 console.log(daysForecastsData)

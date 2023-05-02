@@ -26,7 +26,7 @@ function Favorites() {
             try {
                 const promises = favorites.map(async (favorite) => {
                     const currentWeatherResponse = await axios.get(
-                        `http://dataservice.accuweather.com/currentconditions/v1/${favorite.key}?apikey=${process.env.REACT_APP_API_KEY}`
+                        `https://dataservice.accuweather.com/currentconditions/v1/${favorite.key}?apikey=${process.env.REACT_APP_API_KEY}`
                     );
                     return currentWeatherResponse.data;
                 });

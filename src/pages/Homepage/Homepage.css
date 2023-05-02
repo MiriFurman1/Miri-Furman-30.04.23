@@ -22,7 +22,10 @@
 .search input{
     width:40vw;
     padding: 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.2rem;
+    border:none;
 }
 
-
+input:focus{
+    outline: none;
+  }
