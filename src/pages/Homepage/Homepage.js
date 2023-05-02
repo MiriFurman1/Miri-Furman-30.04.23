@@ -140,22 +140,22 @@ function Homepage() {
                     <input
                         value={citySearch}
                         onChange={(e) => setCitySearch(e.target.value)}
-                        style={{ backgroundColor: darkMode ? 'black' : 'white', color: darkMode ? 'white' : 'black' }}
+                        style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? 'white' : 'black' }}
                     />
-                    <Button type='submit' style={{ backgroundColor: darkMode ? "black" : 'white', color: darkMode ? "white" : "black", padding: '0.5rem' }}><AiOutlineSearch /></Button>
+                    <Button type='submit' style={{ backgroundColor: darkMode ?'#333' : 'white', color: darkMode ? "white" : "black", padding: '0.5rem' }}><AiOutlineSearch /></Button>
 
                 </form>
 
                 <div className='topContainer' >
 
-                    <Card className="card" style={{ backgroundColor: darkMode ? "black" : 'white', color: darkMode ? "white" : "black" }}>
+                    <Card className="card" style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? "white" : "black" }}>
                         {currentLocation && <h3>{currentLocation}</h3>}
-                        {currentWeather[0] && <h3>{currentWeather[0].Temperature.Metric.Value}{currentWeather[0].Temperature.Metric.Unit}</h3>}
-                        {currentWeather[0] && <h3>{currentWeather[0].WeatherText}</h3>}
-                        {currentWeather[0] && <img src={`/weather icons/${currentWeather[0].WeatherIcon}-s.png`} alt='day-icon'></img>}
+                        {(currentWeather&&currentWeather[0]) && <h3>{currentWeather[0].Temperature.Metric.Value}{currentWeather[0].Temperature.Metric.Unit}</h3>}
+                        {(currentWeather&&currentWeather[0]) && <h3>{currentWeather[0].WeatherText}</h3>}
+                        {(currentWeather&&currentWeather[0])&& <img src={`/weather icons/${currentWeather[0].WeatherIcon}-s.png`} alt='day-icon'></img>}
                     </Card>
                     <Button
-                        style={{ backgroundColor: darkMode ? "black" : 'white', color: darkMode ? "white" : "black", padding: '0.5rem' }}
+                        style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? "white" : "black", padding: '0.5rem' }}
                         onClick={() => {
                             const isAlreadyFavorite = favorites.some((favorite) => favorite.key === cityData.Key);
                             if (isAlreadyFavorite) {
@@ -172,7 +172,7 @@ function Homepage() {
                 <div className='DaysWeather'>
                     {daysForecasts && daysForecasts.DailyForecasts.map((forecast, i) => {
                         return (
-                            <Card className="card" key={i} style={{ backgroundColor: darkMode ? "black" : 'white', color: darkMode ? "white" : "black" }}>
+                            <Card className="card" key={i} style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? "white" : "black" }}>
                                 <h3>{dayjs(forecast.Date).format('dddd')}</h3>
                                 <p>{dayjs(forecast.Date).format(' DD-MM-YYYY')}</p>
                                 <p>{forecast.Temperature.Maximum.Value}{forecast.Temperature.Maximum.Unit}</p>
