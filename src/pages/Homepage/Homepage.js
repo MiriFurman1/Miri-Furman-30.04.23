@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Header from '../../components/Header/Header.js';
 import useFavoritesStore from '../../app/favoritesStore.js';
+import useThemeStore from '../../app/themeStore.js';
 import './Homepage.css'
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -24,7 +25,7 @@ function Homepage() {
     const [citySearch, setCitySearch] = useState("")
     const [cityData, setCityData] = useState({ LocalizedName: "Tel Aviv", Key: 215854 })
     const [isFavorite, setIsFavorite] = useState(false)
-    const [apiLimitReached, setApiLimitReached] = useState(false);
+    const darkMode = useThemeStore(state => state.darkMode)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -103,7 +104,7 @@ function Homepage() {
                     `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${process.env.REACT_APP_API_KEY}&q=${citySearch}`
                 );
                 let cityDataVar = response.data[0];
-                if(!cityDataVar){
+                if (!cityDataVar) {
                     setCitySearch('');
                     throw Error("city not found")
                 }
@@ -138,23 +139,23 @@ function Homepage() {
                 <form className='search' onSubmit={searchCity}>
                     <input
                         value={citySearch}
-                        onChange={(e) => setCitySearch(e.target.value)}>
-                    </input>
-                    <Button type='submit' style={{ backgroundColor: 'white', padding: '0.5rem' }}><AiOutlineSearch /></Button>
+                        onChange={(e) => setCitySearch(e.target.value)}
+                        style={{ backgroundColor: darkMode ? 'black' : 'white', color: darkMode ? 'white' : 'black' }}
+                    />
+                    <Button type='submit' style={{ backgroundColor: darkMode ? "black" : 'white', color: darkMode ? "white" : "black", padding: '0.5rem' }}><AiOutlineSearch /></Button>
 
                 </form>
 
                 <div className='topContainer' >
 
-                    <Card className="card">
-                        {apiLimitReached && <p>API request limit reached for today.</p>}
+                    <Card className="card" style={{ backgroundColor: darkMode ? "black" : 'white', color: darkMode ? "white" : "black" }}>
                         {currentLocation && <h3>{currentLocation}</h3>}
                         {currentWeather[0] && <h3>{currentWeather[0].Temperature.Metric.Value}{currentWeather[0].Temperature.Metric.Unit}</h3>}
                         {currentWeather[0] && <h3>{currentWeather[0].WeatherText}</h3>}
                         {currentWeather[0] && <img src={`/weather icons/${currentWeather[0].WeatherIcon}-s.png`} alt='day-icon'></img>}
                     </Card>
                     <Button
-                        style={{ backgroundColor: 'white', padding: '0.5rem' }}
+                        style={{ backgroundColor: darkMode ? "black" : 'white', color: darkMode ? "white" : "black", padding: '0.5rem' }}
                         onClick={() => {
                             const isAlreadyFavorite = favorites.some((favorite) => favorite.key === cityData.Key);
                             if (isAlreadyFavorite) {
@@ -171,8 +172,8 @@ function Homepage() {
                 <div className='DaysWeather'>
                     {daysForecasts && daysForecasts.DailyForecasts.map((forecast, i) => {
                         return (
-                            <Card className="card" key={i} >
-                                <p>{dayjs(forecast.Date).format('dddd')}</p>
+                            <Card className="card" key={i} style={{ backgroundColor: darkMode ? "black" : 'white', color: darkMode ? "white" : "black" }}>
+                                <h3>{dayjs(forecast.Date).format('dddd')}</h3>
                                 <p>{dayjs(forecast.Date).format(' DD-MM-YYYY')}</p>
                                 <p>{forecast.Temperature.Maximum.Value}{forecast.Temperature.Maximum.Unit}</p>
                                 <img src={`/weather icons/${forecast.Day.Icon}-s.png`} alt='day-icon'></img>

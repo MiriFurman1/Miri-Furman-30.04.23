@@ -1,6 +1,16 @@
-.Header{
+.Header {
     display: flex;
     align-items: center;
     justify-content: space-around;
+  }
+  
+  .Header--dark {
+    background-color: black;
+    color: white;
+  }
+  
+  .Header--light {
     background-color: white;
-}
+    color: black;
+  }
+
