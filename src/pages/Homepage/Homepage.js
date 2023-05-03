@@ -33,15 +33,15 @@ function Homepage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // const currentWeatherResponse = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/215854?apikey=${process.env.REACT_APP_API_KEY}`);
-                // setCurrentWeather(currentWeatherResponse.data);
-                // localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
-                // const iconCode = currentWeatherResponse.data[0].WeatherIcon;
-                // document.body.style.backgroundImage = `url(${weatherBackgrounds[iconCode] || '/default.jpg'})`;
-                // const isMetric = tempUnit === 'Metric';
-                // const daysForecastsResponse = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_API_KEY}&metric=${isMetric}`);
-                // setDaysForecasts(daysForecastsResponse.data);
-                // localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
+                const currentWeatherResponse = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/215854?apikey=${process.env.REACT_APP_API_KEY}`);
+                setCurrentWeather(currentWeatherResponse.data);
+                localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
+                const iconCode = currentWeatherResponse.data[0].WeatherIcon;
+                document.body.style.backgroundImage = `url(${weatherBackgrounds[iconCode] || '/default.jpg'})`;
+                const isMetric = tempUnit === 'Metric';
+                const daysForecastsResponse = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_API_KEY}&metric=${isMetric}`);
+                setDaysForecasts(daysForecastsResponse.data);
+                localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
             } catch (error) {
                 toast(error.message);
             }
@@ -52,29 +52,29 @@ function Homepage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            // try {
-                // if (selectedCity !== null && Object.keys(selectedCity).length !== 0) {
-                //     const currentWeatherResponse = await axios.get(
-                //         `https://dataservice.accuweather.com/currentconditions/v1/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}`
-                //     );
-                //     setCurrentWeather(currentWeatherResponse.data);
-                //     const iconCode = currentWeatherResponse.data[0].WeatherIcon;
+            try {
+                if (selectedCity !== null && Object.keys(selectedCity).length !== 0) {
+                    const currentWeatherResponse = await axios.get(
+                        `https://dataservice.accuweather.com/currentconditions/v1/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}`
+                    );
+                    setCurrentWeather(currentWeatherResponse.data);
+                    const iconCode = currentWeatherResponse.data[0].WeatherIcon;
 
-                // document.body.style.backgroundImage = `url(${weatherBackgrounds[iconCode] || '/default.jpg'})`;
+                document.body.style.backgroundImage = `url(${weatherBackgrounds[iconCode] || '/default.jpg'})`;
 
-                //     localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
+                    localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
 
-                    // const daysForecastsResponse = await axios.get(
-                    //     `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
-                    // );
-                    // setDaysForecasts(daysForecastsResponse.data);
-                    // localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
-                    // setCurrentLocation(selectedCity.cityName);
-                    // setSelectedCity(null);
-                // }
-            // } catch (error) {
-            //     toast(error.message);
-            // }
+                    const daysForecastsResponse = await axios.get(
+                        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
+                    );
+                    setDaysForecasts(daysForecastsResponse.data);
+                    localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
+                    setCurrentLocation(selectedCity.cityName);
+                    setSelectedCity(null);
+                }
+            } catch (error) {
+                toast(error.message);
+            }
         };
         fetchData();
     }, [selectedCity]);
@@ -131,12 +131,12 @@ function Homepage() {
 
                 localStorage.setItem('currentWeather', JSON.stringify(currentWeatherData));
                 
-                // const daysForecastsResponse = await axios.get(
-                //     `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
-                // );
-                // const daysForecastsData = daysForecastsResponse.data;
-                // setDaysForecasts(daysForecastsData);
-                // localStorage.setItem('daysForecasts', JSON.stringify(daysForecastsData));
+                const daysForecastsResponse = await axios.get(
+                    `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
+                );
+                const daysForecastsData = daysForecastsResponse.data;
+                setDaysForecasts(daysForecastsData);
+                localStorage.setItem('daysForecasts', JSON.stringify(daysForecastsData));
             } catch (error) {
                 setCitySearch('');
                 toast(error.message);

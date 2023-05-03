@@ -24,20 +24,20 @@ function Favorites() {
 
     useEffect(() => {
         const getWeatherForFavorites = async () => {
-        //     try {
-        //         const promises = favorites.map(async (favorite) => {
-        //             const currentWeatherResponse = await axios.get(
-        //                 `https://dataservice.accuweather.com/currentconditions/v1/${favorite.key}?apikey=${process.env.REACT_APP_API_KEY}`
-        //             );
-        //             return currentWeatherResponse.data;
-        //         });
+            try {
+                const promises = favorites.map(async (favorite) => {
+                    const currentWeatherResponse = await axios.get(
+                        `https://dataservice.accuweather.com/currentconditions/v1/${favorite.key}?apikey=${process.env.REACT_APP_API_KEY}`
+                    );
+                    return currentWeatherResponse.data;
+                });
 
-        //         const favoriteWeatherData = await Promise.all(promises);
-        //         setFavoriteWeathers(favoriteWeatherData);
-        //         localStorage.setItem('favoriteWeathers', JSON.stringify(favoriteWeatherData));
-        //     } catch (error) {
-        //         toast(error.message);
-        // }
+                const favoriteWeatherData = await Promise.all(promises);
+                setFavoriteWeathers(favoriteWeatherData);
+                localStorage.setItem('favoriteWeathers', JSON.stringify(favoriteWeatherData));
+            } catch (error) {
+                toast(error.message);
+        }
         };
 
         getWeatherForFavorites();
