@@ -2,6 +2,8 @@
 <p>This is a simple web app built with React and MUI that displays the weather of a city using the AccuWeather API. Users can search for a city, add it to their favorites and view the weather details of the city on the main page. The app has two pages: weather page and favorites page.</p>
 <img src="WeatherVision.png" alt="WeatherVision" width="900px">
 <h2>Demo</h2>
+[WeatherVision-video.webm](https://user-images.githubusercontent.com/112945435/235898628-72476453-e4cd-4d21-ac3b-52f9e5473684.webm)
+
 <p>You can find a live demo of the app here: https://weather-app-miri.netlify.app/ </p>
 <h2>Specs</h2>
 <ul>
