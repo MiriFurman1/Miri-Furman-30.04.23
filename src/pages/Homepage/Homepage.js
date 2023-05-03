@@ -91,7 +91,7 @@ function Homepage() {
             (favorite) => favorite.name === cityData.LocalizedName
         );
         setIsFavorite(isCurrentLocationFavorite);
-    }, [favorites, cityData,selectedCity]);
+    }, [favorites, cityData,selectedCity,currentLocation]);
 
     const searchCity = async (e) => {
         e.preventDefault();
