@@ -189,10 +189,10 @@ function Homepage() {
                             <Card className="card" key={i} style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? "white" : "black" }}>
                                 <h3>{dayjs(forecast.Date).format('dddd')}</h3>
                                 <p>{dayjs(forecast.Date).format(' DD-MM-YYYY')}</p>
-                                <p>{forecast.Temperature.Maximum.Value}{forecast.Temperature.Maximum.Unit}</p>
-                                <img src={`/weather icons/${forecast.Day.Icon}-s.png`} alt='day-icon'></img>
-                                <p>{forecast.Temperature.Minimum.Value}{forecast.Temperature.Minimum.Unit}</p>
-                                <img src={`/weather icons/${forecast.Night.Icon}-s.png`} alt='day-icon'></img>
+                                {forecast&&<p>{forecast.Temperature.Maximum.Value}{forecast.Temperature.Maximum.Unit}</p>}
+                                {forecast&&<img src={`/weather icons/${forecast.Day.Icon}-s.png`} alt='day-icon'></img>}
+                                {forecast&&<p>{forecast.Temperature.Minimum.Value}{forecast.Temperature.Minimum.Unit}</p>}
+                                {forecast&&<img src={`/weather icons/${forecast.Night.Icon}-s.png`} alt='day-icon'></img>}
                             </Card>
                         )
                     })}
