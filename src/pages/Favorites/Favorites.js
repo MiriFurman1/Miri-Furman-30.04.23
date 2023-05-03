@@ -63,7 +63,7 @@ function Favorites() {
                             <h3>{favorite.name}</h3>
                             {favoriteWeathers[index] && (
                                 <>
-                                    <p>{favoriteWeathers[index][0].Temperature[tempUnit].Value}{favoriteWeathers[index][0].Temperature[tempUnit].Unit}</p>
+                                    <p>{favoriteWeathers[index][0].Temperature[tempUnit]?.Value}{favoriteWeathers[index][0].Temperature[tempUnit]?.Unit}</p>
                                     <p>{favoriteWeathers[index][0].WeatherText}</p>
                                     <img src={`/weather icons/${favoriteWeathers[index][0].WeatherIcon}-s.png`} alt='day-icon'></img>
                                 </>
