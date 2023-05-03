@@ -54,6 +54,7 @@ function Homepage() {
         const fetchData = async () => {
             try {
                 if (selectedCity !== null && Object.keys(selectedCity).length !== 0) {
+                    
                     const currentWeatherResponse = await axios.get(
                         `https://dataservice.accuweather.com/currentconditions/v1/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}`
                     );
@@ -69,6 +70,10 @@ function Homepage() {
                     );
                     setDaysForecasts(daysForecastsResponse.data);
                     localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
+                    const isCurrentLocationFavorite = favorites.some(
+                        (favorite) => favorite.name === selectedCity.cityName
+                    );
+                    setIsFavorite(isCurrentLocationFavorite);
                     setCurrentLocation(selectedCity.cityName);
                     setSelectedCity(null);
                 }
