@@ -6,6 +6,12 @@ const themeStore = (set) => ({
     toggleDarkMode: () => {
         set((state) => ({ darkMode: !state.darkMode }));
     },
+    toggleTempUnit: () => {
+        set((state) => ({
+            tempUnit: state.tempUnit === "Metric" ? "Imperial" : "Metric",
+        }));
+    },
+    tempUnit: "celsius",
 });
 
 const useThemeStore = create(
@@ -14,7 +20,6 @@ const useThemeStore = create(
             name: "theme",
         })
     )
-)
-
+);
 
 export default useThemeStore;

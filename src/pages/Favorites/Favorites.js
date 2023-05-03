@@ -14,6 +14,7 @@ function Favorites() {
     const setSelectedCity = useFavoritesStore((state) => state.setSelectedCity);
     const navigate = useNavigate();
     const darkMode=useThemeStore(state=>state.darkMode)
+    const tempUnit = useThemeStore((state) => state.tempUnit);
 
     const handleCardClick = (cityKey, cityName) => {
         setSelectedCity({ cityKey: cityKey, cityName: cityName });
@@ -23,20 +24,20 @@ function Favorites() {
 
     useEffect(() => {
         const getWeatherForFavorites = async () => {
-            try {
-                const promises = favorites.map(async (favorite) => {
-                    const currentWeatherResponse = await axios.get(
-                        `https://dataservice.accuweather.com/currentconditions/v1/${favorite.key}?apikey=${process.env.REACT_APP_API_KEY}`
-                    );
-                    return currentWeatherResponse.data;
-                });
+        //     try {
+        //         const promises = favorites.map(async (favorite) => {
+        //             const currentWeatherResponse = await axios.get(
+        //                 `https://dataservice.accuweather.com/currentconditions/v1/${favorite.key}?apikey=${process.env.REACT_APP_API_KEY}`
+        //             );
+        //             return currentWeatherResponse.data;
+        //         });
 
-                const favoriteWeatherData = await Promise.all(promises);
-                setFavoriteWeathers(favoriteWeatherData);
-                localStorage.setItem('favoriteWeathers', JSON.stringify(favoriteWeatherData));
-            } catch (error) {
-                toast(error.message);
-        }
+        //         const favoriteWeatherData = await Promise.all(promises);
+        //         setFavoriteWeathers(favoriteWeatherData);
+        //         localStorage.setItem('favoriteWeathers', JSON.stringify(favoriteWeatherData));
+        //     } catch (error) {
+        //         toast(error.message);
+        // }
         };
 
         getWeatherForFavorites();
@@ -48,7 +49,7 @@ function Favorites() {
 
             <div className="container">
             <h1  style={{color:"white"}}>Favorites</h1>
-                {favorites.length === 0 && <h2>No favorites found yet</h2>}
+                {favorites.length === 0 && <h2 style={{color:"white"}}>No favorites found yet</h2>}
             </div>
 
 
@@ -57,12 +58,12 @@ function Favorites() {
 
                     {favorites && favorites.map((favorite, index) => (
                         <Card className="card favoriteCard" key={index}
-                        style={{ backgroundColor: darkMode?"black":'white',color:darkMode?"white":"black"}}
+                        style={{ backgroundColor: darkMode?"#333":'white',color:darkMode?"white":"black"}}
                             onClick={() => handleCardClick(favorite.key, favorite.name)}>
                             <h3>{favorite.name}</h3>
                             {favoriteWeathers[index] && (
                                 <>
-                                    <p>{favoriteWeathers[index][0].Temperature.Metric.Value}{favoriteWeathers[index][0].Temperature.Metric.Unit}</p>
+                                    <p>{favoriteWeathers[index][0].Temperature[tempUnit].Value}{favoriteWeathers[index][0].Temperature[tempUnit].Unit}</p>
                                     <p>{favoriteWeathers[index][0].WeatherText}</p>
                                     <img src={`/weather icons/${favoriteWeathers[index][0].WeatherIcon}-s.png`} alt='day-icon'></img>
                                 </>

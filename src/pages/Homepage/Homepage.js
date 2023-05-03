@@ -12,6 +12,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { AiOutlineHeart } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import { toast } from 'react-toastify';
+import weatherBackgrounds from '../../app/weatherBackgrounds.js'
 
 function Homepage() {
     const favorites = useFavoritesStore(state => state.favorites);
@@ -26,46 +27,54 @@ function Homepage() {
     const [cityData, setCityData] = useState({ LocalizedName: "Tel Aviv", Key: 215854 })
     const [isFavorite, setIsFavorite] = useState(false)
     const darkMode = useThemeStore(state => state.darkMode)
+    const tempUnit = useThemeStore((state) => state.tempUnit);
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const currentWeatherResponse = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/215854?apikey=${process.env.REACT_APP_API_KEY}`);
-                setCurrentWeather(currentWeatherResponse.data);
-                localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
-
-                const daysForecastsResponse = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_API_KEY}&metric=true`);
-                setDaysForecasts(daysForecastsResponse.data);
-                localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
+                // const currentWeatherResponse = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/215854?apikey=${process.env.REACT_APP_API_KEY}`);
+                // setCurrentWeather(currentWeatherResponse.data);
+                // localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
+                // const iconCode = currentWeatherResponse.data[0].WeatherIcon;
+                // document.body.style.backgroundImage = `url(${weatherBackgrounds[iconCode] || '/default.jpg'})`;
+                // const isMetric = tempUnit === 'Metric';
+                // const daysForecastsResponse = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_API_KEY}&metric=${isMetric}`);
+                // setDaysForecasts(daysForecastsResponse.data);
+                // localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
             } catch (error) {
                 toast(error.message);
             }
         };
 
         fetchData();
-    }, []);
+    }, [tempUnit]);
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                if (selectedCity !== null && Object.keys(selectedCity).length !== 0) {
-                    const currentWeatherResponse = await axios.get(
-                        `https://dataservice.accuweather.com/currentconditions/v1/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}`
-                    );
-                    setCurrentWeather(currentWeatherResponse.data);
-                    localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
+            // try {
+                // if (selectedCity !== null && Object.keys(selectedCity).length !== 0) {
+                //     const currentWeatherResponse = await axios.get(
+                //         `https://dataservice.accuweather.com/currentconditions/v1/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}`
+                //     );
+                //     setCurrentWeather(currentWeatherResponse.data);
+                //     const iconCode = currentWeatherResponse.data[0].WeatherIcon;
 
-                    const daysForecastsResponse = await axios.get(
-                        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
-                    );
-                    setDaysForecasts(daysForecastsResponse.data);
-                    localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
-                    setCurrentLocation(selectedCity.cityName);
-                    setSelectedCity(null);
-                }
-            } catch (error) {
-                toast(error.message);
-            }
+                // document.body.style.backgroundImage = `url(${weatherBackgrounds[iconCode] || '/default.jpg'})`;
+
+                //     localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
+
+                    // const daysForecastsResponse = await axios.get(
+                    //     `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
+                    // );
+                    // setDaysForecasts(daysForecastsResponse.data);
+                    // localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
+                    // setCurrentLocation(selectedCity.cityName);
+                    // setSelectedCity(null);
+                // }
+            // } catch (error) {
+            //     toast(error.message);
+            // }
         };
         fetchData();
     }, [selectedCity]);
@@ -111,25 +120,30 @@ function Homepage() {
                 setCityData(cityDataVar);
                 setCitySearch('');
                 setCurrentLocation(cityDataVar.LocalizedName)
-                console.log(cityDataVar);
                 const currentWeatherResponse = await axios.get(
                     `https://dataservice.accuweather.com/currentconditions/v1/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}`
                 );
                 const currentWeatherData = currentWeatherResponse.data;
                 setCurrentWeather(currentWeatherData);
+
+                const iconCode = currentWeatherResponse.data[0].WeatherIcon;
+                document.body.style.backgroundImage = `url(${weatherBackgrounds[iconCode] || '/default.jpg'})`;
+
                 localStorage.setItem('currentWeather', JSON.stringify(currentWeatherData));
-                const daysForecastsResponse = await axios.get(
-                    `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
-                );
-                const daysForecastsData = daysForecastsResponse.data;
-                console.log(daysForecastsData)
-                setDaysForecasts(daysForecastsData);
-                localStorage.setItem('daysForecasts', JSON.stringify(daysForecastsData));
+                
+                // const daysForecastsResponse = await axios.get(
+                //     `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
+                // );
+                // const daysForecastsData = daysForecastsResponse.data;
+                // setDaysForecasts(daysForecastsData);
+                // localStorage.setItem('daysForecasts', JSON.stringify(daysForecastsData));
             } catch (error) {
+                setCitySearch('');
                 toast(error.message);
             }
         }
     };
+
 
 
     return (
@@ -142,7 +156,7 @@ function Homepage() {
                         onChange={(e) => setCitySearch(e.target.value)}
                         style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? 'white' : 'black' }}
                     />
-                    <Button type='submit' style={{ backgroundColor: darkMode ?'#333' : 'white', color: darkMode ? "white" : "black", padding: '0.5rem' }}><AiOutlineSearch /></Button>
+                    <Button type='submit' style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? "white" : "black", padding: '0.5rem', }}><AiOutlineSearch /></Button>
 
                 </form>
 
@@ -150,9 +164,9 @@ function Homepage() {
 
                     <Card className="card" style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? "white" : "black" }}>
                         {currentLocation && <h3>{currentLocation}</h3>}
-                        {(currentWeather&&currentWeather[0]) && <h3>{currentWeather[0].Temperature.Metric.Value}{currentWeather[0].Temperature.Metric.Unit}</h3>}
-                        {(currentWeather&&currentWeather[0]) && <h3>{currentWeather[0].WeatherText}</h3>}
-                        {(currentWeather&&currentWeather[0])&& <img src={`/weather icons/${currentWeather[0].WeatherIcon}-s.png`} alt='day-icon'></img>}
+                        {(currentWeather && currentWeather[0]) && <h3>{currentWeather[0].Temperature[tempUnit].Value}{currentWeather[0].Temperature[tempUnit].Unit}</h3>}
+                        {(currentWeather && currentWeather[0]) && <h3>{currentWeather[0].WeatherText}</h3>}
+                        {(currentWeather && currentWeather[0]) && <img src={`/weather icons/${currentWeather[0].WeatherIcon}-s.png`} alt='day-icon'></img>}
                     </Card>
                     <Button
                         style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? "white" : "black", padding: '0.5rem' }}
