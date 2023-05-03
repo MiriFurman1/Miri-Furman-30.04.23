@@ -33,6 +33,7 @@ function Homepage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                if(!selectedCity &&selectedCity === null ){
                 const currentWeatherResponse = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/215854?apikey=${process.env.REACT_APP_API_KEY}`);
                 setCurrentWeather(currentWeatherResponse.data);
                 localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
@@ -42,6 +43,7 @@ function Homepage() {
                 const daysForecastsResponse = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_API_KEY}&metric=${isMetric}`);
                 setDaysForecasts(daysForecastsResponse.data);
                 localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
+            }
             } catch (error) {
                 toast(error.message);
             }
@@ -54,9 +56,12 @@ function Homepage() {
         const fetchData = async () => {
             try {
                 if (selectedCity !== null && Object.keys(selectedCity).length !== 0) {
-                    
+                    const isCurrentLocationFavorite = favorites.some(
+                        (favorite) => favorite.name === selectedCity.cityName
+                    );
+                    setIsFavorite(isCurrentLocationFavorite);
                     const currentWeatherResponse = await axios.get(
-                        `https://dataservice.accuweather.com/currentconditions/v1/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}`
+                        `https://dataservice.accuweather.com/currentconditions/v1/${selectedCity.Key}?apikey=${process.env.REACT_APP_API_KEY}`
                     );
                     setCurrentWeather(currentWeatherResponse.data);
                     const iconCode = currentWeatherResponse.data[0].WeatherIcon;
@@ -66,15 +71,14 @@ function Homepage() {
                     localStorage.setItem("currentWeather", JSON.stringify(currentWeatherResponse.data));
 
                     const daysForecastsResponse = await axios.get(
-                        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${selectedCity.cityKey}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
+                        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${selectedCity.Key}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
                     );
                     setDaysForecasts(daysForecastsResponse.data);
                     localStorage.setItem("daysForecasts", JSON.stringify(daysForecastsResponse.data));
-                    const isCurrentLocationFavorite = favorites.some(
-                        (favorite) => favorite.name === selectedCity.cityName
-                    );
-                    setIsFavorite(isCurrentLocationFavorite);
-                    setCurrentLocation(selectedCity.cityName);
+
+                    setCurrentLocation(selectedCity.LocalizedName);
+                    setCityData(selectedCity)
+                    
                     setSelectedCity(null);
                 }
             } catch (error) {
@@ -93,10 +97,10 @@ function Homepage() {
 
     useEffect(() => {
         const isCurrentLocationFavorite = favorites.some(
-            (favorite) => favorite.name === cityData.LocalizedName
+            (favorite) => favorite.LocalizedName === cityData.LocalizedName
         );
         setIsFavorite(isCurrentLocationFavorite);
-    }, [favorites, cityData,selectedCity,currentLocation]);
+    }, [selectedCity,citySearch,favorites,cityData.LocalizedName]);
 
     const searchCity = async (e) => {
         e.preventDefault();
@@ -135,7 +139,6 @@ function Homepage() {
                 document.body.style.backgroundImage = `url(${weatherBackgrounds[iconCode] || '/default.jpg'})`;
 
                 localStorage.setItem('currentWeather', JSON.stringify(currentWeatherData));
-                
                 const daysForecastsResponse = await axios.get(
                     `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityDataVar.Key}?apikey=${process.env.REACT_APP_API_KEY}&metric=true`
                 );
@@ -176,13 +179,12 @@ function Homepage() {
                     <Button
                         style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? "white" : "black", padding: '0.5rem' }}
                         onClick={() => {
-                            const isAlreadyFavorite = favorites.some((favorite) => favorite.key === cityData.Key);
-                            if (isAlreadyFavorite) {
+                            if (isFavorite) {
                                 removeFavorite(cityData.Key);
+
                             } else {
-                                addFavorite({ name: cityData.LocalizedName, key: cityData.Key });
+                                addFavorite({ LocalizedName: cityData.LocalizedName, Key: cityData.Key });
                             }
-                            setIsFavorite(!isFavorite);
                         }}
                     >
                         {isFavorite ? <><AiFillHeart size={25} /> Remove from favorites</> : <><AiOutlineHeart size={25} /> Add to favorites</>}

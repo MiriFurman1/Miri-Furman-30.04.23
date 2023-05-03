@@ -16,8 +16,8 @@ function Favorites() {
     const darkMode=useThemeStore(state=>state.darkMode)
     const tempUnit = useThemeStore((state) => state.tempUnit);
 
-    const handleCardClick = (cityKey, cityName) => {
-        setSelectedCity({ cityKey: cityKey, cityName: cityName });
+    const handleCardClick = (Key, cityName) => {
+        setSelectedCity({ Key: Key, LocalizedName: cityName });
         navigate('/')
     };
 
@@ -27,7 +27,7 @@ function Favorites() {
             try {
                 const promises = favorites.map(async (favorite) => {
                     const currentWeatherResponse = await axios.get(
-                        `https://dataservice.accuweather.com/currentconditions/v1/${favorite.key}?apikey=${process.env.REACT_APP_API_KEY}`
+                        `https://dataservice.accuweather.com/currentconditions/v1/${favorite.Key}?apikey=${process.env.REACT_APP_API_KEY}`
                     );
                     return currentWeatherResponse.data;
                 });
@@ -59,8 +59,8 @@ function Favorites() {
                     {favorites && favorites.map((favorite, index) => (
                         <Card className="card favoriteCard" key={index}
                         style={{ backgroundColor: darkMode?"#333":'white',color:darkMode?"white":"black"}}
-                            onClick={() => handleCardClick(favorite.key, favorite.name)}>
-                            <h3>{favorite.name}</h3>
+                            onClick={() => handleCardClick(favorite.Key, favorite.LocalizedName)}>
+                            <h3>{favorite.LocalizedName}</h3>
                             {favoriteWeathers[index] && (
                                 <>
                                     <p>{favoriteWeathers[index][0].Temperature[tempUnit]?.Value}{favoriteWeathers[index][0].Temperature[tempUnit]?.Unit}</p>

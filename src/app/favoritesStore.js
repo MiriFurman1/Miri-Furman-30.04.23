@@ -12,8 +12,9 @@ const favoritesStore = (set) => ({
         }))
     },
     removeFavorite: (favoriteKey) => {
+
         set((state) => ({
-            favorites: state.favorites.filter((c) => c.key !== favoriteKey)
+            favorites: state.favorites.filter((c) => c.Key !== favoriteKey)
         }))
     },
     selectedCity: null,
