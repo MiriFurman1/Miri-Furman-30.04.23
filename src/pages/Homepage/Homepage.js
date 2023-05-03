@@ -164,7 +164,7 @@ function Homepage() {
 
                     <Card className="card" style={{ backgroundColor: darkMode ? '#333' : 'white', color: darkMode ? "white" : "black" }}>
                         {currentLocation && <h3>{currentLocation}</h3>}
-                        {(currentWeather && currentWeather[0]) && <h3>{currentWeather[0].Temperature[tempUnit]?.Value}{currentWeather[0].Temperature[tempUnit].Unit}</h3>}
+                        {(currentWeather && currentWeather[0]) && <h3>{currentWeather[0].Temperature[tempUnit]?.Value}{currentWeather[0].Temperature[tempUnit]?.Unit}</h3>}
                         {(currentWeather && currentWeather[0]) && <h3>{currentWeather[0]?.WeatherText}</h3>}
                         {(currentWeather && currentWeather[0]) && <img src={`/weather icons/${currentWeather[0].WeatherIcon}-s.png`} alt='day-icon'></img>}
                     </Card>
