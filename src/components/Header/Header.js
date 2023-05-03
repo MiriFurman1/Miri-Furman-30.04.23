@@ -17,7 +17,7 @@ function Header() {
   const headerClass = isDarkMode ? 'Header Header--dark' : 'Header Header--light';
   return (
     <div className={headerClass}>
-      <a href="/"><h3>Weather App</h3></a>
+      <a href="/"><h3>WeatherVision</h3></a>
       <div>
         <Button href="/">Home</Button>
         <Button href="/favorites">Favorites</Button>
